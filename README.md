@@ -1,65 +1,51 @@
-## Example Summary
+# README for Thermostat Control System
 
-Application that toggles an LED(s) using a GPIO pin interrupt.
+## Introduction
+This project is a thermostat control system designed for embedded platforms. The primary goal is to maintain a user-defined temperature setpoint by actively reading current temperature and toggling a heating element (simulated by an LED) on or off.
 
-## Peripherals & Pin Assignments
+## Prerequisites
+Embedded system hardware (like the Texas Instruments board)
+C environment for development (like Code Composer Studio)
+Basic knowledge of C, GPIO, I2C, UART, and Timer peripherals
 
-When this project is built, the SysConfig tool will generate the TI-Driver
-configurations into the __ti_drivers_config.c__ and __ti_drivers_config.h__
-files. Information on pins and resources used is present in both generated
-files. Additionally, the System Configuration file (\*.syscfg) present in the
-project may be opened with SysConfig's graphical user interface to determine
-pins and resources used.
+## Installation
+Clone the repository to your local machine. If you're using an IDE, open the project from the directory you've cloned it into. Ensure that the target hardware matches the one defined in the project settings.
+``` git clone https://github.com/ColeBaxendale/AC_Simulator_Embedded_Systems.git ```
 
-* `CONFIG_GPIO_LED_0` - Indicates that the board was initialized within
-`mainThread()` also toggled by `CONFIG_GPIO_BUTTON_0`
-* `CONFIG_GPIO_LED_1` - Toggled by `CONFIG_GPIO_BUTTON_1`
-* `CONFIG_GPIO_BUTTON_0` - Toggles `CONFIG_GPIO_LED_0`
-* `CONFIG_GPIO_BUTTON_1` - Toggles `CONFIG_GPIO_LED_1`
+## Usage
+The system reads temperature data from an I2C temperature sensor. If the current temperature is below the setpoint, the heater (an LED in this case) turns on. The user can increase or decrease the setpoint using buttons. The system prints status messages over UART.
 
-## BoosterPacks, Board Resources & Jumper Settings
+**Here's a snippet of how the temperature reading is done:**
+```
+int16_t readTemp(void){
+    int16_t temperature = 0;
+    i2cTransaction.readCount = 2;
+    if (I2C_transfer(i2c, &i2cTransaction)){
+        temperature = (rxBuffer[0] << 8) | (rxBuffer[1]);
+        temperature *= 0.0078125;
+        if (rxBuffer[0] & 0x80){
+            temperature |= 0xF000;
+        }
+    }
+    else{
+        DISPLAY(snprintf(output, 64, "Error reading temperature sensor (%d)\n\r",i2cTransaction.status))
+    }
+    return temperature;
+}
+```
 
-For board specific jumper settings, resources and BoosterPack modifications,
-refer to the __Board.html__ file.
+**Button interrupts are handled as follows:**
+```
+void gpioButtonFxn0(uint_least8_t index){
+    ButtonFlagIncrease = 1;
+}
 
-> If you're using an IDE such as Code Composer Studio (CCS) or IAR, please
-refer to Board.html in your project directory for resources used and
-board-specific jumper settings.
+void gpioButtonFxn1(uint_least8_t index){
+    ButtonFlagDecrease = 1;
+}
+```
 
-The Board.html can also be found in your SDK installation:
+## Main Goal
+The primary objective of this project is to demonstrate real-time hardware interaction and control using embedded systems. This is showcased through precise temperature control via sensor feedback and user input.
 
-        <SDK_INSTALL_DIR>/source/ti/boards/<BOARD>
 
-## Example Usage
-
-* Run the example. `CONFIG_GPIO_LED_0` turns ON to indicate driver
-initialization is complete.
-
-* `CONFIG_GPIO_LED_0` is toggled by pushing `CONFIG_GPIO_BUTTON_0`.
-* `CONFIG_GPIO_LED_1` is toggled by pushing `CONFIG_GPIO_BUTTON_1`.
-
-## Application Design Details
-
-* The `gpioButtonFxn0/1` functions are configured in the driver configuration
-file. These functions are called in the context of the GPIO interrupt.
-
-* Not all boards have more than one button, so `CONFIG_GPIO_LED_1` may not be
-toggled.
-
-* There is no button de-bounce logic in the example.
-
-TI-RTOS:
-
-* When building in Code Composer Studio, the configuration project will be
-imported along with the example. These projects can be found under
-\<SDK_INSTALL_DIR>\/kernel/tirtos/builds/\<BOARD\>/(release|debug)/(ccs|gcc).
-The configuration project is referenced by the example, so it
-will be built first. The "release" configuration has many debug features
-disabled. These features include assert checking, logging and runtime stack
-checks. For a detailed difference between the "release" and "debug"
-configurations, please refer to the TI-RTOS Kernel User's Guide.
-
-FreeRTOS:
-
-* Please view the `FreeRTOSConfig.h` header file for example configuration
-information.
