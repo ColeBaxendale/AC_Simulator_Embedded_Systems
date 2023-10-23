@@ -10,7 +10,9 @@ Basic knowledge of C, GPIO, I2C, UART, and Timer peripherals
 
 ## Installation
 Clone the repository to your local machine. If you're using an IDE, open the project from the directory you've cloned it into. Ensure that the target hardware matches the one defined in the project settings.
-``` git clone https://github.com/ColeBaxendale/AC_Simulator_Embedded_Systems.git ```
+``` 
+git clone https://github.com/ColeBaxendale/AC_Simulator_Embedded_Systems.git
+```
 
 ## Usage
 The system reads temperature data from an I2C temperature sensor. If the current temperature is below the setpoint, the heater (an LED in this case) turns on. The user can increase or decrease the setpoint using buttons. The system prints status messages over UART.
