@@ -1,7 +1,7 @@
 # README for Thermostat Control System
 
-## Introduction
-This project is a thermostat control system designed for embedded platforms. The primary goal is to maintain a user-defined temperature setpoint by actively reading current temperature and toggling a heating element (simulated by an LED) on or off.
+## Project Overview
+This project, "AC Simulator Embedded Systems," was designed to simulate the temperature regulation aspect of an air conditioning system using embedded systems, specifically targeting the Texas Instruments development boards. The problem it addresses is real-time hardware interaction and control, common in many IoT devices today, like smart thermostats. By managing hardware peripherals and implementing control logic, the system maintains a user-defined temperature setpoint, mimicking a fundamental smart climate control scenario.
 
 ## Prerequisites
 Embedded system hardware (like the Texas Instruments board)
@@ -47,7 +47,20 @@ void gpioButtonFxn1(uint_least8_t index){
 }
 ```
 
-## Main Goal
-The primary objective of this project is to demonstrate real-time hardware interaction and control using embedded systems. This is showcased through precise temperature control via sensor feedback and user input.
+## Strengths of the Project
+One of the project's particular strengths was the efficient use of hardware interrupts to handle real-time changes, ensuring prompt responses to temperature fluctuations and user inputs. Additionally, code modularity and the use of descriptive naming conventions made the program highly readable and easy to follow, aiding both current understanding and future development efforts.
 
+## Areas for Improvement
+While the project was successful, there's room for improvement in error handling, particularly around failed sensor readings or hardware malfunctions. Incorporating a more robust system that can detect, log, and perhaps recover from errors could significantly enhance reliability. Additionally, expanding the system to handle more diverse scenarios, such as varying environmental conditions, could enhance its adaptability and usability.
 
+## New Tools and Resources
+Throughout this project, several valuable tools and resources were added to the support network, including:
+Advanced usage of the Code Composer Studio.
+In-depth knowledge of I2C protocol for sensor interactions.
+Enhanced understanding of hardware interrupts and their handling in embedded systems.
+
+## Transferable Skills
+The skills honed during this project, including real-time data processing, hardware-software interfacing, and modular programming, are highly transferable. They're applicable to a wide array of projects requiring hardware interaction or real-time control, such as IoT devices, robotics, and more. These competencies are also valuable for coursework involving hardware, systems programming, or performance-critical applications.
+
+## Maintainability, Readability, and Adaptability
+This project was designed with best practices in mind to ensure maintainability, readability, and adaptability. Code was extensively commented and organized into logical modules to enhance readability. Functions were designed to have single responsibilities, promoting maintainability and future enhancements. For adaptability, hardware dependencies were isolated, and data structures were designed to allow easy adjustments, like adding new sensors or control elements.
