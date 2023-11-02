@@ -1,7 +1,7 @@
 # README for Thermostat Control System
 
 ## Project Overview
-This project, "AC Simulator Embedded Systems," was designed to simulate the temperature regulation aspect of an air conditioning system using embedded systems, specifically targeting the Texas Instruments development boards. The problem it addresses is real-time hardware interaction and control, common in many IoT devices today, like smart thermostats. By managing hardware peripherals and implementing control logic, the system maintains a user-defined temperature setpoint, mimicking a fundamental smart climate control scenario.
+This project, "Heater Simulator Embedded Systems," was designed to simulate the temperature regulation aspect of an heating system using embedded systems, specifically targeting the Texas Instruments development boards. The problem it addresses is real-time hardware interaction and control, common in many IoT devices today, like smart thermostats. By managing hardware peripherals and implementing control logic, the system maintains a user-defined temperature setpoint, mimicking a fundamental smart climate control scenario.
 
 ## Prerequisites
 Embedded system hardware (like the Texas Instruments board)
